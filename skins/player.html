@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+	<meta charset="utf-8" />
+    <script src="jwplayer-7.2.2/jwplayer.js"></script>
+    <link href="skins/five.css" rel="stylesheet" />
+    <script src="content/jquery-2.1.4.js"></script>
+    <link href="Resources/component.css" rel="stylesheet" />
+    <link href="Resources/demo.css" rel="stylesheet" />
+    <link href="Resources/normalize.css" rel="stylesheet" />
+
+    <script type="text/javascript">jwplayer.key = "887zsTo75XCpGDcUtoiDKQvnZEgpb083zlSFQg==";</script>
+    <script type="text/javascript">
+        var thePlayer;  //保存当前播放器以便操作  
+        $(function() {
+            thePlayer = jwplayer('container').setup({
+                flashplayer: 'jwplayer-7.2.2/jwplayer.flash.swf',
+                file: 'Resources/Bruno Mars - Marry You.mp3',
+                image: "Resources/1392802497_1436653066_25300_sProdImgNo_7.jpg",
+                //width: 500,
+                //height: 350,
+                dock: false,
+                //skin: "skins/five.css",
+            });
+
+            //播放 暂停
+            $('.player-play').click(function() {
+                if (thePlayer.getState() != 'PLAYING') {
+                    thePlayer.play(true);
+                    this.value = '暂停';
+                } else {
+                    thePlayer.play(false);
+                    this.value = '播放';
+                }
+            });
+
+            //停止
+            $('.player-stop').click(function() { thePlayer.stop(); });
+
+            //获取状态
+            $('.player-status').click(function() {
+                var state = thePlayer.getState();
+                var msg;
+                switch (state) {
+                    case 'BUFFERING':
+                        msg = '加载中';
+                        break;
+                    case 'PLAYING':
+                        msg = '正在播放';
+                        break;
+                    case 'PAUSED':
+                        msg = '暂停';
+                        break;
+                    case 'IDLE':
+                        msg = '停止';
+                        break;
+                }
+                alert(msg);
+            });
+
+            //获取播放进度
+            $('.player-current').click(function() { alert(thePlayer.getPosition()); });
+
+            //跳转到指定位置播放
+            $('.player-goto').click(function() {
+                if (thePlayer.getState() != 'PLAYING') {    //若当前未播放，先启动播放器
+                    thePlayer.play();
+                }
+                thePlayer.seek(30); //从指定位置开始播放(单位：秒)
+            });
+
+            //获取视频长度
+            $('.player-length').click(function() { alert(thePlayer.getDuration()); });
+        });
+    </script>
+    <style>
+        #container{
+            margin:auto;
+            margin-top:auto;
+        }
+    </style>
+</head>
+<body>
+
+   <div id="container"></div>
+    
+
+
+
+</body>
+</html>
